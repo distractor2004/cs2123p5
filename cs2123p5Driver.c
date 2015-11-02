@@ -122,6 +122,41 @@ int main()
     printf("\n");
     return 0;
 }
+
+// Driver function to process a input data line.  Groups must write this function
+void processCommand(Tree tree, QuoteSelection quote, char szInputBuffer[]){
+    
+	switch(parent)//tree? or quote option then create the tree node??? 
+
+	case DEFINE
+		//getToken
+		if OPTION
+			//What option number?
+			1
+		if VALUE
+			
+	case	 PRINT
+			 /* If ONE, then use printOne once, if ALL, would printOne be used repeatedly
+			  * since there is only a printOne() but no printAll() function?
+			  * Or is void printPriceMenu(Tree tree) used for ALL?
+			  */
+            if ONE
+                printOne(Tree tree, char szId[]);
+			if ALL
+			    
+	case 	QUOTE
+			//getToken
+			if BEGIN
+				if OPTION
+			if END
+				-take options and compile the quote
+			
+	case  	DELETE
+			
+}
+
+
+
 /******************** newTree **************************************
   Tree newTree()
 Purpose:
