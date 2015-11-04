@@ -113,7 +113,7 @@ int main()
         // If the line is just a comment or empty, ignore it
         if (szInputBuffer[0] == '*'  || szInputBuffer[0] == '\0')
             continue;                               // Command is a comment so skip it
-
+	//Driver function taken from cs2123p5.h
         processCommand(tree, quoteSelection, szInputBuffer);
     }
 
@@ -126,34 +126,85 @@ int main()
 }
 
 // Driver function to process a input data line.  Groups must write this function
-void processCommand(Tree tree, QuoteSelection quote, char szInputBuffer[]){
+processCommand(Tree tree, QuoteSelection quote, char szInputBuffer[]){
+	
+	//need to get parentID and szId from szInputBuffer....
+	/* 	element type created for below functions requiring element (possibly to load information from
+		tree/quote info into element for evaluation???)
+	*/
+	Element element;
     
-	switch(parent)//tree? or quote option then create the tree node??? 
+	switch(parent){
+		//inserts nodes into the tree
+		case DEFINE
+			//insertPriceMenu is used for BOTH option and value...but what is inserted
+			//to determine OPTION or VALUE???
+			//is function used twice or once by an if(OPTION || VALUE)...?
+			if OPTION 
+				//inserts one menu item into the tree.  This is used from the DEFINE command.
+				//tree inserted from Tree type at beginning of function
+				//element inserted from Element type created in function
+				insertPriceMenu(tree, element, char szParentId[]);
+			if VALUE
+				//inserts one menu item into the tree.  This is used from the DEFINE command.
+				//tree inserted from Tree type at beginning of function
+				//element inserted from Element type created in function
+				insertPriceMenu(tree, element, char szParentId[]);
+				
+		case	 PRINT
+				 /* If ONE, then use printOne once, if ALL, would printOne be used repeatedly
+				  * since there is only a printOne() but no printAll() function?
+				  * Or is void printPriceMenu(Tree tree) used for ALL?
+				  */
+				//prints one item from the tree.  This is used from the PRINT ONE command.
+				//based on szId, and checks to make sure szId exists too
+	            		if ONE
+	            			//tree inserted from Tree type at beginning of function
+	                		printOne(tree, char szId[]);
 
-	case DEFINE
-		//getToken
-		if OPTION
-			//What option number?
-			1
-		if VALUE
-			
-	case	 PRINT
-			 /* If ONE, then use printOne once, if ALL, would printOne be used repeatedly
-			  * since there is only a printOne() but no printAll() function?
-			  * Or is void printPriceMenu(Tree tree) used for ALL?
-			  */
-            if ONE
-                printOne(Tree tree, char szId[]);
-			if ALL
-			    
-	case 	QUOTE
-			//getToken
-			if BEGIN
+
+	                	//prints the entire tree in a pretty print style (see sample output).
+				if ALL
+					//tree inserted from Tree type at beginning of function
+					printPriceMenu(tree);  
+		case 	QUOTE
+				//starts a quote selection.  Note that this shouldn't call determineQuote.
+				//what is needed to "start quote selection"?
+				if BEGIN
+				
+				//what does Option do? Does it pull and prep the data for determineQuote()?
 				if OPTION
-			if END
-				-take options and compile the quote
+				
+			/*	
+				* QUOTE END describes a set of values used to get a price quote.  It should invoke determineQuote passing
+				* the information from the QUOTE OPTION commands.  See the discussion about determineQuote and the sample 
+				* output.
+				* The driver must examine the returnCode and print whether this was a total cost, partial cost, option 
+				* error, or option selection error.  
+				* For total cost and partial cost, it should also print those totals.
+			*/
+				if END
+					//take options and compile the quote
+					//quote inserted from QuoteSelection at beginning of function
+					//tree inserted from Tree type at beginning of function
+				/*	* Note that the driver must examine the returnCode and print whether 
+					* this was a total cost, partial cost, option 
+					* error, or option selection error.  
+					* For total cost and partial cost, it should also print those totals.
+				*/
+					determineQuote(tree, quote);
+			//will delete a node based on szId
+			//tree parent should be updated to no longer reference the node
+		case  	DELETE
+			/* deletes one item (and its pChild children )from the tree.  
+			It should not delete its siblings.  The deleted nodes
+			must be freed.  This is used from the DELETE command. */
+			deleteItem(tree, char szId[]);
 			
-	case  	DELETE
+			
+				
+	}
+	//is another case or more statements needed based on the returnCode that determineQuote() gives?		
 			
 }
 
