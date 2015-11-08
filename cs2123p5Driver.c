@@ -21,7 +21,6 @@ Input:
         Note:  if we are inserting at the root, the szSubordinateToId will be "ROOT".
         Print warnings (don't terminate) if the szId already exists or if the
         szSubordinateToId doesn't exist.
-
     DEFINE VALUE szId szOptionId cCostInd dCost szTitle
         where szId is the ID of this new node,
               szOptionId is the ID of the option which is its parent 
@@ -35,10 +34,8 @@ Input:
         Print warnings (don't terminate) if the szId already exists or if the 
         szOptionId doesn't exist.  If the node containing the szOptionId isn't 
         an OPTION, print a warning.
-
     PRINT ALL 
         prints the entire tree in a pretty print style (see sample output).
-
     PRINT ONE szId 
         prints one item 
     QUOTE BEGIN 
@@ -62,7 +59,6 @@ Input:
         AUDIO     8-Track                    -100
         WARRANTY  70k/5yr                     900
         Total                               17850
-
     DELETE szId	
         This causes the specified node to be deleted 
         from the tree.  As a result, its parent should no longer reference it.  
@@ -70,9 +66,7 @@ Input:
         For example, deleting the base should remove it from its parent's value chain, 
         but should not cause PLUS and OY to be deleted.   
         Print a warning if the szId doesn't already exist.
-
     *	a comment in the data.  It is only used to explain the data.
-
 Results:
     The commands cause a binary tree to be modified, printed or used to get 
     a prie quote.
@@ -91,10 +85,10 @@ Notes:
 // about the safety of scanf and printf
 #define _CRT_SECURE_NO_WARNINGS 1
 
-#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
-#include &lt;stdarg.h&gt;
-#include &lt;stdlib.h&gt;
+#include stdio.h;
+#include string.h;
+#include stdarg.h;
+#include stdlib.h;
 #include "cs2123p5.h"
 
 int main()
@@ -133,7 +127,70 @@ processCommand(Tree tree, QuoteSelection quote, char szInputBuffer[]){
 		tree/quote info into element for evaluation???)
 	*/
 	Element element;
-    
+	/* Note: element consists of these traits:
+
+		char   cNodeType;		      // 'O' - option, 'V' - value
+		char   szId[MAX_ID_SIZE + 1]; // unique ID for each node
+		char   szTitle[30];           // title to display
+		char   cCostInd;              // Y - it has a cost, N - it does not have a cost
+		double dCost;
+	*/
+	
+	char *pszInput;
+		
+	pszInput = getToken(pszInput, Token, MAX_TOKEN_SIZE);
+	//If it is a '*' then bail out of function to get next line
+	if(Token[0] = '*')
+		return;
+
+	if (strcmp(Token, "DEFINE") == 0){
+
+		pszInput = getToken(pszInput, Token, MAX_TOKEN_SIZE);
+		if(strcmp(Token, "VALUE") == 0)){
+			
+			//do something with "VALUE"
+		}else if(strcmp(Token, "OPTION") == 0)){
+			//do something with "OPTION"
+
+		}else
+			printf("ERROR: DEFINE definition is not OPTION or VALUE...\n");
+
+	
+	}else if(strcmp(Token, "PRINT") == 0){
+		
+		pszInput = getToken(pszInput, Token, MAX_TOKEN_SIZE);
+		if(strcmp(Token, "ONE") == 0))
+				//do something with "ONE"
+		else if(strcmp(Token, "ALL") == 0))
+				//do something with "ALL"
+		else
+			printf("ERROR: PRINT definition is not ONE or ALL...\n");
+
+	}else if(strcmp(Token, "QUOTE") == 0){
+		
+		pszInput = getToken(pszInput, Token, MAX_TOKEN_SIZE);
+		if (strcmp(Token, "BEGIN") == 0))
+			//do something with "BEGIN"
+		else if (strcmp(Token, "OPTION") == 0))
+			//do something with "OPTION"
+		else if(strcmp(Token, "END") == 0))
+			//do something with "END"
+		else
+			printf("ERROR: QUOTE definition is not BEGIN, OPTION, or END...\n");
+
+	}
+	else if DELETE
+	//not supposed to reach this level
+	else{
+		printf("Data was not read correctly, revise code for better error handling...\n");
+		exit 1;
+	}
+
+
+
+		
+//switch statement removed for now due to assuming data is string based
+/*	
 	switch(parent){
 		//inserts nodes into the tree
 		case DEFINE
@@ -203,8 +260,8 @@ processCommand(Tree tree, QuoteSelection quote, char szInputBuffer[]){
 			
 			
 				
-	}
-	//is another case or more statements needed based on the returnCode that determineQuote() gives?		
+	}*/
+		
 			
 }
 
@@ -330,16 +387,13 @@ void warning(char szFmt[], ... )
 Purpose:
     In general, this routine optionally prints error messages and diagnostics.
     It also prints usage information.
-
     If this is an argument error (iArg &gt;= 0), it prints a formatted message 
     showing which argument was in error, the specified message, and
     supplemental diagnostic information.  It also shows the usage. It exits 
     with ERR_COMMAND_LINE.
-
     If this is a usage error (but not specific to the argument), it prints 
     the specific message and its supplemental diagnostic information.  It 
     also shows the usage and exist with ERR_COMMAND_LINE. 
-
     If this is just asking for usage (iArg will be -1), the usage is shown.
     It exits with USAGE_ONLY.
 Parameters:
@@ -442,4 +496,3 @@ char * getToken(char *pszInputTxt, char szToken[], int iTokenSize)
     else
         return pszInputTxt + 1;
 }
-</pre></body></html>
