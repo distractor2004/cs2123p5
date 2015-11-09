@@ -144,125 +144,74 @@ processCommand(Tree tree, QuoteSelection quote, char szInputBuffer[]){
 		return;
 
 	if (strcmp(Token, "DEFINE") == 0){
-
+		//get next token in buffer
 		pszInput = getToken(pszInput, Token, MAX_TOKEN_SIZE);
-		if(strcmp(Token, "VALUE") == 0)){
-			
-			//do something with "VALUE"
-		}else if(strcmp(Token, "OPTION") == 0)){
-			//do something with "OPTION"
 
-		}else
+		if(strcmp(Token, "VALUE") == 0))
+			/*
+				*inserts one menu item into the tree.  This is used from the DEFINE command.
+				*tree inserted from Tree type at beginning of function
+				*element inserted from Element type created in function
+			*/
+			insertPriceMenu(tree, element, char szParentId[]);
+		else if(strcmp(Token, "OPTION") == 0))
+			/*
+				*inserts one menu item into the tree.  This is used from the DEFINE command.
+				*tree inserted from Tree type at beginning of function
+				*element inserted from Element type created in function
+			*/
+			insertPriceMenu(tree, element, char szParentId[]);
+		else
 			printf("ERROR: DEFINE definition is not OPTION or VALUE...\n");
 
 	
 	}else if(strcmp(Token, "PRINT") == 0){
-		
+		//get next token in buffer
 		pszInput = getToken(pszInput, Token, MAX_TOKEN_SIZE);
+		
 		if(strcmp(Token, "ONE") == 0))
-				//do something with "ONE"
+				//only one item is printed
+	                	printOne(tree, char szId[]);
 		else if(strcmp(Token, "ALL") == 0))
-				//do something with "ALL"
+				//entire price menu is printed
+				printPriceMenu(tree);  
 		else
 			printf("ERROR: PRINT definition is not ONE or ALL...\n");
 
 	}else if(strcmp(Token, "QUOTE") == 0){
-		
+		//get next token in buffer
 		pszInput = getToken(pszInput, Token, MAX_TOKEN_SIZE);
+
 		if (strcmp(Token, "BEGIN") == 0))
 			//do something with "BEGIN"
 		else if (strcmp(Token, "OPTION") == 0))
 			//do something with "OPTION"
 		else if(strcmp(Token, "END") == 0))
-			//do something with "END"
-		else
-			printf("ERROR: QUOTE definition is not BEGIN, OPTION, or END...\n");
-
-	}
-	else if DELETE
-	//not supposed to reach this level
-	else{
-		printf("Data was not read correctly, revise code for better error handling...\n");
-		exit 1;
-	}
-
-
-
-		
-//switch statement removed for now due to assuming data is string based
-/*	
-	switch(parent){
-		//inserts nodes into the tree
-		case DEFINE
-			//insertPriceMenu is used for BOTH option and value...but what is inserted
-			//to determine OPTION or VALUE???
-			//is function used twice or once by an if(OPTION || VALUE)...?
-			if OPTION 
-				//inserts one menu item into the tree.  This is used from the DEFINE command.
-				//tree inserted from Tree type at beginning of function
-				//element inserted from Element type created in function
-				insertPriceMenu(tree, element, char szParentId[]);
-			if VALUE
-				//inserts one menu item into the tree.  This is used from the DEFINE command.
-				//tree inserted from Tree type at beginning of function
-				//element inserted from Element type created in function
-				insertPriceMenu(tree, element, char szParentId[]);
-				
-		case	 PRINT
-				 /* If ONE, then use printOne once, if ALL, would printOne be used repeatedly
-				  * since there is only a printOne() but no printAll() function?
-				  * Or is void printPriceMenu(Tree tree) used for ALL?
-				  */
-				//prints one item from the tree.  This is used from the PRINT ONE command.
-				//based on szId, and checks to make sure szId exists too
-	            		if ONE
-	            			//tree inserted from Tree type at beginning of function
-	                		printOne(tree, char szId[]);
-
-
-	                	//prints the entire tree in a pretty print style (see sample output).
-				if ALL
-					//tree inserted from Tree type at beginning of function
-					printPriceMenu(tree);  
-		case 	QUOTE
-				//starts a quote selection.  Note that this shouldn't call determineQuote.
-				//what is needed to "start quote selection"?
-				if BEGIN
-				
-				//what does Option do? Does it pull and prep the data for determineQuote()?
-				if OPTION
-				
+			//take options and compile the quote
+			//quote inserted from QuoteSelection at beginning of function
+			//tree inserted from Tree type at beginning of function
 			/*	
-				* QUOTE END describes a set of values used to get a price quote.  It should invoke determineQuote passing
-				* the information from the QUOTE OPTION commands.  See the discussion about determineQuote and the sample 
-				* output.
-				* The driver must examine the returnCode and print whether this was a total cost, partial cost, option 
+				* Note that the driver must examine the returnCode and print whether 
+				* this was a total cost, partial cost, option 
 				* error, or option selection error.  
 				* For total cost and partial cost, it should also print those totals.
 			*/
-				if END
-					//take options and compile the quote
-					//quote inserted from QuoteSelection at beginning of function
-					//tree inserted from Tree type at beginning of function
-				/*	* Note that the driver must examine the returnCode and print whether 
-					* this was a total cost, partial cost, option 
-					* error, or option selection error.  
-					* For total cost and partial cost, it should also print those totals.
-				*/
-					determineQuote(tree, quote);
-			//will delete a node based on szId
-			//tree parent should be updated to no longer reference the node
-		case  	DELETE
-			/* deletes one item (and its pChild children )from the tree.  
-			It should not delete its siblings.  The deleted nodes
-			must be freed.  This is used from the DELETE command. */
-			deleteItem(tree, char szId[]);
-			
-			
-				
-	}*/
+			determineQuote(tree, quote);
+		else
+			printf("ERROR: QUOTE definition is not BEGIN, OPTION, or END...\n");
+
+	}else if DELETE{
+		/* deletes one item (and its pChild children )from the tree.  
+		It should not delete its siblings.  The deleted nodes
+		must be freed.  This is used from the DELETE command. */
+		deleteItem(tree, char szId[]);
 		
-			
+	//not supposed to reach this level
+	}else{
+		printf("Data was not read correctly, revise code for better error handling.\n");
+		printf("Last token read was %s...\n", Token);
+		exit 1;
+	}			
 }
 
 
