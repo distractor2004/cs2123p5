@@ -153,6 +153,9 @@ processCommand(Tree tree, QuoteSelection quote, char szInputBuffer[]){
 				*tree inserted from Tree type at beginning of function
 				*element inserted from Element type created in function
 			*/
+			//create element traits and unique ID based on data given by the buffer
+			//load various element traits into element for function
+			//getToken goes until NULL and creates traits for VALUE
 			insertPriceMenu(tree, element, char szParentId[]);
 		else if(strcmp(Token, "OPTION") == 0))
 			/*
